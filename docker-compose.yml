@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: algovault
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Gzna25i1i2
+    ports:
+      - "5432:5432"
+
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/algovault
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: Gzna25i1i2
+      SPRING_DATA_REDIS_HOST: redis
+    depends_on:
+      - db
+
+  redis:
+    image: redis:7
+    ports:
+      - "6379:6379"
